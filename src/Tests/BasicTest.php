@@ -27,4 +27,31 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
   }
 
+  public function testUnique() {
+    // The iterators should easily locate this file.
+    $splash = Splash::go()->append(__DIR__, __DIR__);
+    $match = '@' . basename(__FILE__) . '@';
+    $paths = $splash->recursiveDirectory()->unique()->regex($match);
+    $matches = 0;
+    foreach ($paths as $path) {
+      ++$matches;
+      $this->assertEquals(realpath(__FILE__), realpath($path));
+    }
+    $this->assertEquals(1, $matches);
+
+    // The iterators should easily locate this file.
+    $splash = Splash::go()->appendArray(array(
+      __DIR__,
+      __DIR__,
+    ));
+    $match = '@' . basename(__FILE__) . '@';
+    $paths = $splash->recursiveDirectory()->unique()->regex($match);
+    $matches = 0;
+    foreach ($paths as $path) {
+      ++$matches;
+      $this->assertEquals(realpath(__FILE__), realpath($path));
+    }
+    $this->assertEquals(1, $matches);
+  }
+
 }

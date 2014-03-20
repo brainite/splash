@@ -16,9 +16,7 @@ class Splash extends \AppendIterator {
       parent::append($var);
     }
     else {
-      parent::append(new \ArrayIterator(array(
-        $var,
-      )));
+      parent::append(new \ArrayIterator(func_get_args()));
     }
     return $this;
   }
@@ -43,16 +41,16 @@ class Splash extends \AppendIterator {
       $ret = NULL;
       switch (sizeof($args)) {
         case 0:
-          $ret = new $name($this->getInnerIterator());
+          $ret = new $name($this);
           break;
         case 1;
-          $ret = new $name($this->getInnerIterator(), $args[0]);
+          $ret = new $name($this, $args[0]);
           break;
         case 2;
-          $ret = new $name($this->getInnerIterator(), $args[0], $args[1]);
+          $ret = new $name($this, $args[0], $args[1]);
           break;
         case 3;
-          $ret = new $name($this->getInnerIterator(), $args[0], $args[1], $args[2]);
+          $ret = new $name($this, $args[0], $args[1], $args[2]);
           break;
       }
       return Splash::go()->append($ret);
@@ -61,28 +59,32 @@ class Splash extends \AppendIterator {
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
-          foreach ($this->getInnerIterator() as $v) {
+          foreach ($this as $v) {
             $ret->append(new $name($v));
           }
           break;
         case 1;
-          foreach ($this->getInnerIterator() as $v) {
+          foreach ($this as $v) {
             $ret->append(new $name($v, $args[0]));
           }
           break;
         case 2;
-          foreach ($this->getInnerIterator() as $v) {
+          foreach ($this as $v) {
             $ret->append(new $name($v, $args[0], $args[1]));
           }
           break;
         case 3;
-          foreach ($this->getInnerIterator() as $v) {
+          foreach ($this as $v) {
             $ret->append(new $name($v, $args[0], $args[1], $args[2]));
           }
           break;
       }
       return $ret;
     }
+  }
+
+  public function unique() {
+    return Splash::go()->append(new \ArrayIterator(array_unique(iterator_to_array($this))));
   }
 
 }
