@@ -1,0 +1,25 @@
+{
+    "name":"wittiws/splash",
+    "type":"library",
+    "description":"Pre-alpha",
+    "keywords":[
+        "xml"
+    ],
+    "homepage":"https://github.com/wittiws/splash",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"Greg Payne",
+            "homepage":"http://www.witti.ws/",
+            "role":"Developer"
+        }
+    ],
+    "require":{
+        "php":">=5.3.3"
+    },
+    "autoload":{
+        "psr-4":{
+            "Splash\\": "src/"
+        }
+    }
+}
