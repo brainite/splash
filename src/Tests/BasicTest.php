@@ -25,6 +25,24 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
     $this->assertEquals(1, $matches);
+
+    // Feed Splash a RecursiveDirectoryIterator.
+    $paths = Splash::go()->appendRecursiveDirectory(__DIR__)->regex($match);
+    $matches = 0;
+    foreach ($paths as $path) {
+      ++$matches;
+      $this->assertEquals(realpath(__FILE__), realpath($path));
+    }
+    $this->assertEquals(1, $matches);
+
+    // Feed Splash a RecursiveDirectoryIterator.
+    $paths = Splash::go()->appendDirectory(__DIR__)->regex($match);
+    $matches = 0;
+    foreach ($paths as $path) {
+      ++$matches;
+      $this->assertEquals(realpath(__FILE__), realpath($path->getPathname()));
+    }
+    $this->assertEquals(1, $matches);
   }
 
   public function testUnique() {
