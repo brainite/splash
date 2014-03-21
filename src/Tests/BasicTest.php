@@ -30,7 +30,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
    * @depends testMount
    */
   public function testFilesystem() {
-    $match = '@' . basename(__FILE__) . '@';
+    $match = '@(?:^|/)' . basename(__FILE__) . '$@';
 
     // The iterators should easily locate this file.
     $splash = Splash::go()->push(__DIR__);
@@ -39,7 +39,6 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $matches = 0;
     foreach ($paths as $path) {
       ++$matches;
-      echo "Match ($matches): $path\n";
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
     $this->assertEquals(1, $matches);
