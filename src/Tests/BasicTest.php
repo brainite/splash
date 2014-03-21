@@ -35,7 +35,9 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     // The iterators should easily locate this file.
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
+    var_dump(iterator_to_array($splash->recursiveDirectory()));
     $paths = $splash->recursiveDirectory()->regex($match);
+    var_dump($paths);
     $matches = 0;
     foreach ($paths as $path) {
       ++$matches;
