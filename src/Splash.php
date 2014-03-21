@@ -3,9 +3,7 @@ namespace Splash;
 
 class Splash extends \AppendIterator {
   public static function go() {
-    $ret = new Splash();
-    $ret->append(new \EmptyIterator());
-    return $ret;
+    return new Splash();
   }
 
   /**
@@ -23,7 +21,8 @@ class Splash extends \AppendIterator {
   }
 
   public function append(\Iterator $it) {
-    parent::append($it);
+    // https://bugs.php.net/bug.php?id=49104
+    $this->getArrayIterator()->append($it);
     return $this;
   }
 
