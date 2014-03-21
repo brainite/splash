@@ -75,16 +75,16 @@ class Splash extends \AppendIterator {
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
-          $ret->append(new $name(new \ArrayIterator(iterator_to_array($this))));
+          $ret->append(new $name(new \ArrayIterator($this->toArray())));
           break;
         case 1;
-          $ret->append(new $name(new \ArrayIterator(iterator_to_array($this)), $args[0]));
+          $ret->append(new $name(new \ArrayIterator($this->toArray()), $args[0]));
           break;
         case 2;
-          $ret->append(new $name(new \ArrayIterator(iterator_to_array($this)), $args[0], $args[1]));
+          $ret->append(new $name(new \ArrayIterator($this->toArray()), $args[0], $args[1]));
           break;
         case 3;
-          $ret->append(new $name(new \ArrayIterator(iterator_to_array($this)), $args[0], $args[1], $args[2]));
+          $ret->append(new $name(new \ArrayIterator($this->toArray()), $args[0], $args[1], $args[2]));
           break;
       }
       $ret->rewind();
@@ -121,22 +121,22 @@ class Splash extends \AppendIterator {
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
-          foreach (iterator_to_array($this) as $v) {
+          foreach ($this->toArray() as $v) {
             $ret->append(new $name($v));
           }
           break;
         case 1;
-          foreach (iterator_to_array($this) as $v) {
+          foreach ($this->toArray() as $v) {
             $ret->append(new $name($v, $args[0]));
           }
           break;
         case 2;
-          foreach (iterator_to_array($this) as $v) {
+          foreach ($this->toArray() as $v) {
             $ret->append(new $name($v, $args[0], $args[1]));
           }
           break;
         case 3;
-          foreach (iterator_to_array($this) as $v) {
+          foreach ($this->toArray() as $v) {
             $ret->append(new $name($v, $args[0], $args[1], $args[2]));
           }
           break;
@@ -155,7 +155,25 @@ class Splash extends \AppendIterator {
   }
 
   public function unique() {
-    return Splash::go()->append(new \ArrayIterator(array_unique(iterator_to_array($this))));
+    return Splash::go()->append(new \ArrayIterator(array_unique($this->toArray())));
+  }
+
+  private function toArray() {
+    $this->rewind();
+    $item = $this->current();
+
+    // DirectoryIterator cannot use iterator_to_array.
+    // https://bugs.php.net/bug.php?id=49755
+    if ($item instanceof \DirectoryIterator) {
+      $arr = array();
+      foreach ($this as $v) {
+        $arr[] = new \SplFileInfo($v->getPathname());
+      }
+      return $arr;
+    }
+    else {
+      return iterator_to_array($this);
+    }
   }
 
 }

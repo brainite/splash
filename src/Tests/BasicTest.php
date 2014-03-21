@@ -35,7 +35,6 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
       | \FilesystemIterator::CURRENT_AS_FILEINFO;
 
     // The iterators should easily locate this file.
-    clearstatcache(TRUE);
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
     $allpaths = $splash->recursiveDirectory($flags);
@@ -50,7 +49,6 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Repeat the first test.
-    clearstatcache(TRUE);
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
     $paths = $splash->recursiveDirectory()->regex($match);
@@ -63,16 +61,13 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
 
     // Shorthand.
     $matches = 0;
-    clearstatcache(TRUE);
-    $paths = splash(__DIR__)->recursiveDirectory($flags)->regex($match);
-    foreach ($paths as $path) {
+    foreach (splash(__DIR__)->recursiveDirectory($flags)->regex($match) as $path) {
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
     $this->assertEquals(1, $matches);
 
     // Feed Splash an array.
-    clearstatcache(TRUE);
     $paths = Splash::go()->appendArray(array(
       __DIR__,
     ))->recursiveDirectory()->regex($match);
@@ -84,7 +79,6 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Feed Splash a RecursiveDirectoryIterator.
-    clearstatcache(TRUE);
     $paths = Splash::go()->appendRecursiveDirectory(__DIR__)->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
@@ -94,14 +88,13 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Feed Splash a RecursiveDirectoryIterator.
-    //     clearstatcache(TRUE);
-    //     $paths = Splash::go()->appendDirectory(__DIR__)->regex($match);
-    //     $matches = 0;
-    //     foreach ($paths as $path) {
-    //       ++$matches;
-    //       $this->assertEquals(realpath(__FILE__), realpath($path->getPathname()));
-    //     }
-    //     $this->assertEquals(1, $matches);
+    $paths = Splash::go()->appendDirectory(__DIR__)->regex($match);
+    $matches = 0;
+    foreach ($paths as $path) {
+      ++$matches;
+      $this->assertEquals(realpath(__FILE__), realpath($path->getPathname()));
+    }
+    $this->assertEquals(1, $matches);
   }
 
   public function testUnique() {
