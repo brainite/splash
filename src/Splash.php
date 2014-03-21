@@ -21,9 +21,14 @@ class Splash extends \AppendIterator {
     return $this;
   }
 
+  /**
+   * Magic method to map calls to the appropriate iterators.
+   * @param string $name
+   * @param array $args
+   * @return \Splash\Splash
+   */
   public function __call($name, $args) {
     $name .= 'Iterator';
-    $class = strtolower($name);
     if (substr($name, 0, 6) === 'append') {
       $name = substr($name, 6);
       switch (sizeof($args)) {
@@ -80,6 +85,15 @@ class Splash extends \AppendIterator {
           break;
       }
       return $ret;
+    }
+  }
+
+  /**
+   * Create the \splash() global shorthand method for quick access to Splash.
+   */
+  public static function mount() {
+    if (!function_exists('splash')) {
+      eval("function splash() { \$s = \\Splash\\Splash::go(); return func_num_args() ? \$s->appendArray(func_get_args()) : \$s; }");
     }
   }
 

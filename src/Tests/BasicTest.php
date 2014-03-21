@@ -3,13 +3,41 @@ namespace Splash\Tests;
 
 use Splash\Splash;
 class BasicTest extends \PHPUnit_Framework_TestCase {
+  public function testMount() {
+    // Confirm that multiple calls are safe.
+    Splash::mount();
+    Splash::mount();
+    Splash::mount();
+
+    // Perform a basic test of the splash function.
+    $expected = "1 2 3";
+    $actual = '';
+    foreach (splash(1, 2, 3) as $k) {
+      $actual .= ' ' . $k;
+    }
+    $actual = trim($actual);
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
+   * @depends testMount
+   */
   public function testFilesystem() {
+    $match = '@' . basename(__FILE__) . '@';
+
     // The iterators should easily locate this file.
     $splash = Splash::go()->append(__DIR__);
-    $match = '@' . basename(__FILE__) . '@';
     $paths = $splash->recursiveDirectory()->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
+      ++$matches;
+      $this->assertEquals(realpath(__FILE__), realpath($path));
+    }
+    $this->assertEquals(1, $matches);
+
+    // Shorthand.
+    $matches = 0;
+    foreach (splash(__DIR__)->recursiveDirectory()->regex($match) as $path) {
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
