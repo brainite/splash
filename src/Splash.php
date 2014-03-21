@@ -23,7 +23,7 @@ class Splash extends \AppendIterator {
   public function append(\Iterator $it) {
     // https://bugs.php.net/bug.php?id=49104
     $empty = !$this->count();
-    $inner = $this->getArrayIterator();
+    $inner = parent::getArrayIterator();
     if ($empty) {
       $workaround = new \ArrayIterator(array(
         'workaround'
@@ -35,6 +35,7 @@ class Splash extends \AppendIterator {
     else {
       $inner->append($it);
     }
+    $this->rewind();
     return $this;
   }
 
