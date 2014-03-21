@@ -88,22 +88,22 @@ class Splash extends \AppendIterator {
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
-          foreach ($this as $v) {
+          foreach (iterator_to_array($this) as $v) {
             $ret->append(new $name($v));
           }
           break;
         case 1;
-          foreach ($this as $v) {
+          foreach (iterator_to_array($this) as $v) {
             $ret->append(new $name($v, $args[0]));
           }
           break;
         case 2;
-          foreach ($this as $v) {
+          foreach (iterator_to_array($this) as $v) {
             $ret->append(new $name($v, $args[0], $args[1]));
           }
           break;
         case 3;
-          foreach ($this as $v) {
+          foreach (iterator_to_array($this) as $v) {
             $ret->append(new $name($v, $args[0], $args[1], $args[2]));
           }
           break;
