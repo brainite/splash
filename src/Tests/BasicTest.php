@@ -31,7 +31,8 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
    */
   public function testFilesystem() {
     $match = '@(?:^|/)' . basename(__FILE__) . '$@';
-    $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO;
+    $flags = \FilesystemIterator::KEY_AS_PATHNAME
+      | \FilesystemIterator::CURRENT_AS_FILEINFO;
 
     // The iterators should easily locate this file.
     clearstatcache(TRUE);
@@ -102,14 +103,14 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Feed Splash a RecursiveDirectoryIterator.
-    clearstatcache(TRUE);
-    $paths = Splash::go()->appendDirectory(__DIR__)->regex($match);
-    $matches = 0;
-    foreach ($paths as $path) {
-      ++$matches;
-      $this->assertEquals(realpath(__FILE__), realpath($path->getPathname()));
-    }
-    $this->assertEquals(1, $matches);
+    //     clearstatcache(TRUE);
+    //     $paths = Splash::go()->appendDirectory(__DIR__)->regex($match);
+    //     $matches = 0;
+    //     foreach ($paths as $path) {
+    //       ++$matches;
+    //       $this->assertEquals(realpath(__FILE__), realpath($path->getPathname()));
+    //     }
+    //     $this->assertEquals(1, $matches);
   }
 
   public function testUnique() {

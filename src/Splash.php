@@ -90,16 +90,16 @@ class Splash extends \AppendIterator {
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
-          $ret->append(new $name($this));
+          $ret->append(new $name(new \ArrayIterator(iterator_to_array($this))));
           break;
         case 1;
-          $ret->append(new $name($this, $args[0]));
+          $ret->append(new $name(new \ArrayIterator(iterator_to_array($this)), $args[0]));
           break;
         case 2;
-          $ret->append(new $name($this, $args[0], $args[1]));
+          $ret->append(new $name(new \ArrayIterator(iterator_to_array($this)), $args[0], $args[1]));
           break;
         case 3;
-          $ret->append(new $name($this, $args[0], $args[1], $args[2]));
+          $ret->append(new $name(new \ArrayIterator(iterator_to_array($this)), $args[0], $args[1], $args[2]));
           break;
       }
       $ret->rewind();
