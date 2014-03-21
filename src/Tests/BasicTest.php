@@ -30,6 +30,32 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
    * @depends testMount
    */
   public function testFilesystem() {
+    $Directory = new \RecursiveDirectoryIterator(__DIR__);
+    $Iterator = new \RecursiveIteratorIterator($Directory);
+    $Regex = new \RegexIterator($Iterator, '/^.+\.php$/i');
+    foreach ($Regex as $path) {
+      echo "a. $path\n";
+    }
+    $Directory = new \RecursiveDirectoryIterator(__DIR__);
+    $Iterator = new \RecursiveIteratorIterator($Directory);
+    $Regex = new \RegexIterator($Iterator, '/^.+\.php$/i');
+    foreach ($Regex as $path) {
+      echo "b. $path\n";
+    }
+    $Directory = new \RecursiveDirectoryIterator(__DIR__);
+    $Iterator = new \RecursiveIteratorIterator($Directory);
+    $Regex = new \RegexIterator($Iterator, '/^.+\.php$/i');
+    foreach ($Regex as $path) {
+      echo "c. $path\n";
+    }
+    $Directory = new \RecursiveDirectoryIterator(__DIR__);
+    $Iterator = new \RecursiveIteratorIterator($Directory);
+    $Regex = new \RegexIterator($Iterator, '/^.+\.php$/i');
+    foreach ($Regex as $path) {
+      echo "d. $path\n";
+    }
+
+
     $match = '@(?:^|/)' . basename(__FILE__) . '$@';
     $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO;
 
