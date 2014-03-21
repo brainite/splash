@@ -38,8 +38,14 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
     $allpaths = $splash->recursiveDirectory($flags);
+    foreach ($allpaths as $p) {
+      echo "all: $p\n";
+    }
     $this->assertGreaterThanOrEqual(2, $allpaths->count(), "All paths together should be at least 2");
     $paths = $allpaths->regex($match);
+    foreach ($paths as $p) {
+      echo "regex: $p\n";
+    }
     $this->assertEquals(1, $paths->count(), "There should only be one regex match.");
     $matches = 0;
     foreach ($paths as $path) {
