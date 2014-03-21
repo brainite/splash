@@ -22,7 +22,19 @@ class Splash extends \AppendIterator {
 
   public function append(\Iterator $it) {
     // https://bugs.php.net/bug.php?id=49104
-    $this->getArrayIterator()->append($it);
+    $empty = !$this->count();
+    $inner = $this->getArrayIterator();
+    if ($empty) {
+      $workaround = new \ArrayIterator(array(
+        'workaround'
+      ));
+      $inner->append($workaround);
+      $inner->append($it);
+      unset($workaround[0]);
+    }
+    else {
+      $inner->append($it);
+    }
     return $this;
   }
 
