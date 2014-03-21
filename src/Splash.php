@@ -22,6 +22,10 @@ class Splash extends \AppendIterator {
 
   public function append(\Iterator $it) {
     // https://bugs.php.net/bug.php?id=49104
+    parent::append($it);
+    foreach ($this as $x);
+    return $this;
+
     $empty = !$this->count();
     $inner = parent::getArrayIterator();
     if ($empty) {
