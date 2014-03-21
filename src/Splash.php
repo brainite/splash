@@ -22,6 +22,14 @@ class Splash extends \AppendIterator {
   }
 
   /**
+   * Count the elements in the current iterator.
+   * @return number
+   */
+  public function count() {
+    return iterator_count($this);
+  }
+
+  /**
    * Magic method to map calls to the appropriate iterators.
    * @param string $name
    * @param array $args

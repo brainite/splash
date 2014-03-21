@@ -17,6 +17,13 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     }
     $actual = trim($actual);
     $this->assertEquals($expected, $actual);
+
+    // Test the count function.
+    $this->assertEquals(0, splash()->count(), "Test count method in empty case.");
+    for ($i = 1; $i <= 10; $i++) {
+      $this->assertEquals($i, splash()->appendArray(array_fill(0, $i, 'X'))->count(), "Test count method in basic case.");
+    }
+    $this->assertEquals(3, splash(1)->append(1)->append(1)->count(), "Test count method with multiple appends.");
   }
 
   /**
