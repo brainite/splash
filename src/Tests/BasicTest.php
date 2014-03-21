@@ -42,9 +42,12 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
       echo "all: $p\n";
     }
     $this->assertGreaterThanOrEqual(2, $allpaths->count(), "All paths together should be at least 2");
-    $paths = $allpaths->regex($match);
+    $paths = $allpaths->regex($match, \RegexIterator::MATCH);
     foreach ($paths as $p) {
-      echo "regex: $p\n";
+      echo "regex-a: $p\n";
+    }
+    foreach ($paths as $p) {
+      echo "regex-b: $p\n";
     }
     $this->assertEquals(1, $paths->count(), "There should only be one regex match.");
     $matches = 0;

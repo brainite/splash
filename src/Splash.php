@@ -47,6 +47,10 @@ class Splash extends \AppendIterator {
           return parent::$name();
         case 1:
           return parent::$name($args[0]);
+        case 2:
+          return parent::$name($args[0], $args[1]);
+        case 3:
+          return parent::$name($args[0], $args[1], $args[2]);
       }
     }
 
@@ -94,19 +98,16 @@ class Splash extends \AppendIterator {
           foreach ($this->getArrayIterator() as $it) {
             $ret->append(new $name($it, $args[0]));
           }
-          //         $ret = new $name($this, $args[0]);
           break;
         case 2;
           foreach ($this->getArrayIterator() as $it) {
             $ret->append(new $name($it, $args[0], $args[1]));
           }
-          //         $ret = new $name($this, $args[0], $args[1]);
           break;
         case 3;
           foreach ($this->getArrayIterator() as $it) {
             $ret->append(new $name($it, $args[0], $args[1], $args[2]));
           }
-          //         $ret = new $name($this, $args[0], $args[1], $args[2]);
           break;
       }
       return $ret;
