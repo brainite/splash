@@ -11,13 +11,17 @@ class Splash extends \AppendIterator {
    * @param mixed $var
    * @return \Splash\Splash
    */
-  public function append($var) {
+  public function push($var) {
     if (is_object($var) && in_array('Iterator', class_implements($var))) {
-      parent::append($var);
+      return $this->append($var);
     }
     else {
-      parent::append(new \ArrayIterator(func_get_args()));
+      return $this->append(new \ArrayIterator(func_get_args()));
     }
+  }
+
+  public function append(\Iterator $it) {
+    parent::append($it);
     return $this;
   }
 

@@ -23,7 +23,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     for ($i = 1; $i <= 10; $i++) {
       $this->assertEquals($i, splash()->appendArray(array_fill(0, $i, 'X'))->count(), "Test count method in basic case.");
     }
-    $this->assertEquals(3, splash(1)->append(1)->append(1)->count(), "Test count method with multiple appends.");
+    $this->assertEquals(3, splash(1)->push(1)->push(1)->count(), "Test count method with multiple appends.");
   }
 
   /**
@@ -33,7 +33,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $match = '@' . basename(__FILE__) . '@';
 
     // The iterators should easily locate this file.
-    $splash = Splash::go()->append(__DIR__);
+    $splash = Splash::go()->push(__DIR__);
     $paths = $splash->recursiveDirectory()->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
@@ -82,7 +82,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
 
   public function testUnique() {
     // The iterators should easily locate this file.
-    $splash = Splash::go()->append(__DIR__, __DIR__);
+    $splash = Splash::go()->push(__DIR__, __DIR__);
     $match = '@' . basename(__FILE__) . '@';
     $paths = $splash->recursiveDirectory()->unique()->regex($match);
     $matches = 0;
