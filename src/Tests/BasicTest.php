@@ -31,6 +31,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
    */
   public function testFilesystem() {
     $match = '@(?:^|/)' . basename(__FILE__) . '$@';
+    $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO;
 
     // The iterators should easily locate this file.
     $splash = Splash::go()->push(__DIR__);
@@ -47,7 +48,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
 
     // Shorthand.
     $matches = 0;
-    $paths = splash(__DIR__)->recursiveDirectory()->regex($match);
+    $paths = splash(__DIR__)->recursiveDirectory($flags)->regex($match);
     foreach ($paths as $path) {
       var_dump($path);
       ++$matches;
@@ -57,17 +58,14 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
 
     // Shorthand.
     $matches = 0;
-    foreach (splash(__DIR__)->recursiveDirectory()->regex($match) as $path) {
+    foreach (splash(__DIR__)->recursiveDirectory($flags)->regex($match) as $path) {
       var_dump($path);
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
     var_dump("A", iterator_to_array(splash(__DIR__)));
-    var_dump("B", iterator_to_array(splash(__DIR__)->recursiveDirectory()));
-    var_dump("C1", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)));
-    var_dump("C2", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)));
-    var_dump("C3", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)));
-    var_dump("C4", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)), splash(__DIR__)->recursiveDirectory()->regex($match)->count());
+    var_dump("B", iterator_to_array(splash(__DIR__)->recursiveDirectory($flags)));
+    var_dump("C1", iterator_to_array(splash(__DIR__)->recursiveDirectory($flags)->regex($match)));
     var_dump(splash(__DIR__)->count());
     var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
     var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
