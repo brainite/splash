@@ -3,7 +3,9 @@ namespace Splash;
 
 class Splash extends \AppendIterator {
   public static function go() {
-    return new Splash();
+    $ret = new Splash();
+    $ret->append(new \EmptyIterator());
+    return $ret;
   }
 
   /**
@@ -84,6 +86,7 @@ class Splash extends \AppendIterator {
           $ret->append(new $name($this, $args[0], $args[1], $args[2]));
           break;
       }
+      $ret->rewind();
       return $ret;
     }
     elseif (stripos($name, 'IteratorIterator') !== FALSE) {
