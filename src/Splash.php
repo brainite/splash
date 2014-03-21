@@ -55,7 +55,7 @@ class Splash extends \AppendIterator {
       }
     }
     elseif (is_subclass_of($name, 'FilterIterator')
-      || strpos($name, 'IteratorIterator') !== FALSE) {
+      || stripos($name, 'IteratorIterator') !== FALSE) {
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:

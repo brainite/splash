@@ -34,11 +34,10 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO;
 
     // The iterators should easily locate this file.
+    clearstatcache(TRUE);
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
-    var_dump(iterator_to_array($splash->recursiveDirectory()));
     $paths = $splash->recursiveDirectory()->regex($match);
-    var_dump(iterator_to_array($paths), $paths->count());
     $matches = 0;
     foreach ($paths as $path) {
       ++$matches;
@@ -47,6 +46,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Repeat the first test.
+    clearstatcache(TRUE);
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
     $paths = $splash->recursiveDirectory()->regex($match);
@@ -59,6 +59,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
 
     // Shorthand.
     $matches = 0;
+    clearstatcache(TRUE);
     $paths = splash(__DIR__)->recursiveDirectory($flags)->regex($match);
     var_dump("A", $paths, $paths->count());
     foreach ($paths as $path) {
@@ -69,6 +70,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Feed Splash an array.
+    clearstatcache(TRUE);
     $paths = Splash::go()->appendArray(array(
       __DIR__,
     ))->recursiveDirectory()->regex($match);
@@ -80,6 +82,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Feed Splash a RecursiveDirectoryIterator.
+    clearstatcache(TRUE);
     $paths = Splash::go()->appendRecursiveDirectory(__DIR__)->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
@@ -89,6 +92,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Feed Splash a RecursiveDirectoryIterator.
+    clearstatcache(TRUE);
     $paths = Splash::go()->appendDirectory(__DIR__)->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
