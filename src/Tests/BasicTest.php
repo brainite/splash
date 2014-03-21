@@ -61,12 +61,12 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $matches = 0;
     clearstatcache(TRUE);
     $paths = splash(__DIR__)->recursiveDirectory($flags)->regex($match);
-    var_dump("A", $paths, $paths->count());
+    var_dump("A", iterator_to_array($paths), $paths->count());
     foreach ($paths as $path) {
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
-    var_dump("B", $paths, $paths->count());
+    var_dump("B", iterator_to_array($paths), $paths->count());
     $this->assertEquals(1, $matches);
 
     // Feed Splash an array.
