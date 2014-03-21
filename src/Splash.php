@@ -21,25 +21,7 @@ class Splash extends \AppendIterator {
   }
 
   public function append(\Iterator $it) {
-    // https://bugs.php.net/bug.php?id=49104
     parent::append($it);
-    foreach ($this as $x);
-    return $this;
-
-    $empty = !$this->count();
-    $inner = parent::getArrayIterator();
-    if ($empty) {
-      $workaround = new \ArrayIterator(array(
-        'workaround'
-      ));
-      $inner->append($workaround);
-      $inner->append($it);
-      unset($workaround[0]);
-    }
-    else {
-      $inner->append($it);
-    }
-    $this->rewind();
     return $this;
   }
 
@@ -86,6 +68,10 @@ class Splash extends \AppendIterator {
       }
     }
     elseif (is_subclass_of($name, 'FilterIterator')) {
+      // Avoid a deep recursion of iterators.
+      // In unit tests, this caused duplicate results when a regex was applied to a recursivedirectory.
+      // This is symptomatically similar to a known AppendIterator bug:
+      // https://bugs.php.net/bug.php?id=49104
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
