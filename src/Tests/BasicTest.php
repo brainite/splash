@@ -37,7 +37,10 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     clearstatcache(TRUE);
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
-    $paths = $splash->recursiveDirectory()->regex($match);
+    $allpaths = $splash->recursiveDirectory($flags);
+    $this->assertEquals(2, $allpaths->count(), "All paths together should equal 2");
+    $paths = $allpaths->regex($match);
+    $this->assertEquals(1, $paths->count(), "There should only be one regex match.");
     $matches = 0;
     foreach ($paths as $path) {
       ++$matches;
@@ -61,12 +64,10 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $matches = 0;
     clearstatcache(TRUE);
     $paths = splash(__DIR__)->recursiveDirectory($flags)->regex($match);
-    var_dump("A", iterator_to_array($paths), $paths->count());
     foreach ($paths as $path) {
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
-    var_dump("B", iterator_to_array($paths), $paths->count());
     $this->assertEquals(1, $matches);
 
     // Feed Splash an array.

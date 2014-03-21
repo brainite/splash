@@ -102,6 +102,7 @@ class Splash extends \AppendIterator {
       return $ret;
     }
     else {
+      // NOTE: The iterator_to_array casting below improves handling by HHVM.
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
