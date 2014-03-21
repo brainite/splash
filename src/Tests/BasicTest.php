@@ -30,32 +30,6 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
    * @depends testMount
    */
   public function testFilesystem() {
-    $Directory = new \RecursiveDirectoryIterator(__DIR__);
-    $Iterator = new \RecursiveIteratorIterator($Directory);
-    $Regex = new \RegexIterator($Iterator, '/^.+\.php$/i');
-    foreach ($Regex as $path) {
-      echo "a. $path\n";
-    }
-    $Directory = new \RecursiveDirectoryIterator(__DIR__);
-    $Iterator = new \RecursiveIteratorIterator($Directory);
-    $Regex = new \RegexIterator($Iterator, '/^.+\.php$/i');
-    foreach ($Regex as $path) {
-      echo "b. $path\n";
-    }
-    $Directory = new \RecursiveDirectoryIterator(__DIR__);
-    $Iterator = new \RecursiveIteratorIterator($Directory);
-    $Regex = new \RegexIterator($Iterator, '/^.+\.php$/i');
-    foreach ($Regex as $path) {
-      echo "c. $path\n";
-    }
-    $Directory = new \RecursiveDirectoryIterator(__DIR__);
-    $Iterator = new \RecursiveIteratorIterator($Directory);
-    $Regex = new \RegexIterator($Iterator, '/^.+\.php$/i');
-    foreach ($Regex as $path) {
-      echo "d. $path\n";
-    }
-
-
     $match = '@(?:^|/)' . basename(__FILE__) . '$@';
     $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO;
 
@@ -75,9 +49,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     // Repeat the first test.
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
-    var_dump(iterator_to_array($splash->recursiveDirectory()));
     $paths = $splash->recursiveDirectory()->regex($match);
-    var_dump(iterator_to_array($paths), $paths->count());
     $matches = 0;
     foreach ($paths as $path) {
       ++$matches;
@@ -87,31 +59,13 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
 
     // Shorthand.
     $matches = 0;
-    $paths = splash(__DIR__)->recursiveDirectory($flags)->recursiveIterator()->regex($match);
+    $paths = splash(__DIR__)->recursiveDirectory($flags)->regex($match);
+    var_dump("A", $paths, $paths->count());
     foreach ($paths as $path) {
-      var_dump($path);
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
-    $this->assertEquals(1, $matches);
-
-    // Shorthand.
-    $matches = 0;
-    foreach (splash(__DIR__)->recursiveDirectory($flags)->recursiveIterator()->regex($match) as $path) {
-      var_dump($path);
-      ++$matches;
-      $this->assertEquals(realpath(__FILE__), realpath($path));
-    }
-    var_dump("A", iterator_to_array(splash(__DIR__)));
-    var_dump("B", iterator_to_array(splash(__DIR__)->recursiveDirectory($flags)));
-    var_dump("C1", iterator_to_array(splash(__DIR__)->recursiveDirectory($flags)->regex($match)));
-    var_dump(splash(__DIR__)->count());
-    var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
-    var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
-    var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
-    var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
-    var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
-    var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
+    var_dump("B", $paths, $paths->count());
     $this->assertEquals(1, $matches);
 
     // Feed Splash an array.
@@ -120,7 +74,6 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     ))->recursiveDirectory()->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
-      var_dump($path);
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
@@ -130,7 +83,6 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $paths = Splash::go()->appendRecursiveDirectory(__DIR__)->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
-      var_dump($path);
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
@@ -140,7 +92,6 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $paths = Splash::go()->appendDirectory(__DIR__)->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
-      var_dump($path);
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path->getPathname()));
     }
