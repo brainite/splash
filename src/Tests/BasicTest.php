@@ -52,6 +52,10 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
+    var_dump("A", iterator_to_array(splash(__DIR__)));
+    var_dump("B", iterator_to_array(splash(__DIR__)->recursiveDirectory()));
+    var_dump("C", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)));
+    var_dump(splash(__DIR__)->count());
     var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
     var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
     var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
