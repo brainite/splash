@@ -38,6 +38,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $matches = 0;
     foreach ($paths as $path) {
       ++$matches;
+      echo "Match ($matches): $path\n";
       $this->assertEquals(realpath(__FILE__), realpath($path));
     }
     $this->assertEquals(1, $matches);
