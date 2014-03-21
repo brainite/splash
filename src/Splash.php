@@ -40,6 +40,16 @@ class Splash extends \AppendIterator {
    * @return \Splash\Splash
    */
   public function __call($name, $args) {
+    echo " call $name " . sizeof($args) . "\n";
+    if (method_exists("\\AppendIterator", $name)) {
+      switch (sizeof($args)) {
+        case 0:
+          return parent::$name();
+        case 1:
+          return parent::$name($args[0]);
+      }
+    }
+
     $name .= 'Iterator';
     if (substr($name, 0, 6) === 'append') {
       $name = substr($name, 6);
