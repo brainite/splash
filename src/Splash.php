@@ -54,8 +54,25 @@ class Splash extends \AppendIterator {
           return $this->append(new $name($args[0], $args[1], $args[2]));
       }
     }
-    elseif (is_subclass_of($name, 'FilterIterator')
-      || stripos($name, 'IteratorIterator') !== FALSE) {
+    elseif (is_subclass_of($name, 'FilterIterator')) {
+      $ret = Splash::go();
+      switch (sizeof($args)) {
+        case 0:
+          $ret->append(new $name($this));
+          break;
+        case 1;
+          $ret->append(new $name($this, $args[0]));
+          break;
+        case 2;
+          $ret->append(new $name($this, $args[0], $args[1]));
+          break;
+        case 3;
+          $ret->append(new $name($this, $args[0], $args[1], $args[2]));
+          break;
+      }
+      return $ret;
+    }
+    elseif (stripos($name, 'IteratorIterator') !== FALSE) {
       $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
