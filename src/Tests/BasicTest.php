@@ -54,7 +54,10 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     }
     var_dump("A", iterator_to_array(splash(__DIR__)));
     var_dump("B", iterator_to_array(splash(__DIR__)->recursiveDirectory()));
-    var_dump("C", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)));
+    var_dump("C1", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)));
+    var_dump("C2", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)));
+    var_dump("C3", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)));
+    var_dump("C4", iterator_to_array(splash(__DIR__)->recursiveDirectory()->regex($match)), splash(__DIR__)->recursiveDirectory()->regex($match)->count());
     var_dump(splash(__DIR__)->count());
     var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
     var_dump(splash(__DIR__)->recursiveDirectory()->regex($match)->count());
