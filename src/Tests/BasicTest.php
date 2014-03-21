@@ -87,7 +87,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
 
     // Shorthand.
     $matches = 0;
-    $paths = splash(__DIR__)->recursiveDirectory($flags)->regex($match);
+    $paths = splash(__DIR__)->recursiveDirectory($flags)->recursiveIterator()->regex($match);
     foreach ($paths as $path) {
       var_dump($path);
       ++$matches;
@@ -97,7 +97,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
 
     // Shorthand.
     $matches = 0;
-    foreach (splash(__DIR__)->recursiveDirectory($flags)->regex($match) as $path) {
+    foreach (splash(__DIR__)->recursiveDirectory($flags)->recursiveIterator()->regex($match) as $path) {
       var_dump($path);
       ++$matches;
       $this->assertEquals(realpath(__FILE__), realpath($path));

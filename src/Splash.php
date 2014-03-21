@@ -54,23 +54,35 @@ class Splash extends \AppendIterator {
           return $this->append(new $name($args[0], $args[1], $args[2]));
       }
     }
-    elseif (is_subclass_of($name, 'FilterIterator')) {
-      $ret = NULL;
+    elseif (is_subclass_of($name, 'FilterIterator')
+      || strpos($name, 'IteratorIterator') !== FALSE) {
+      $ret = Splash::go();
       switch (sizeof($args)) {
         case 0:
-          $ret = new $name($this);
+          foreach ($this->getArrayIterator() as $it) {
+            $ret->append(new $name($it));
+          }
           break;
         case 1;
-          $ret = new $name($this, $args[0]);
+          foreach ($this->getArrayIterator() as $it) {
+            $ret->append(new $name($it, $args[0]));
+          }
+          //         $ret = new $name($this, $args[0]);
           break;
         case 2;
-          $ret = new $name($this, $args[0], $args[1]);
+          foreach ($this->getArrayIterator() as $it) {
+            $ret->append(new $name($it, $args[0], $args[1]));
+          }
+          //         $ret = new $name($this, $args[0], $args[1]);
           break;
         case 3;
-          $ret = new $name($this, $args[0], $args[1], $args[2]);
+          foreach ($this->getArrayIterator() as $it) {
+            $ret->append(new $name($it, $args[0], $args[1], $args[2]));
+          }
+          //         $ret = new $name($this, $args[0], $args[1], $args[2]);
           break;
       }
-      return Splash::go()->append($ret);
+      return $ret;
     }
     else {
       $ret = Splash::go();
