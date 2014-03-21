@@ -51,7 +51,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     // Repeat the first test.
     $splash = Splash::go()->push(__DIR__);
     $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
-    $paths = $splash->recursiveDirectory()->recursiveIterator()->regex($match);
+    $paths = $splash->recursiveDirectory()->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
       ++$matches;
@@ -79,7 +79,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1, $matches);
 
     // Feed Splash a RecursiveDirectoryIterator.
-    $paths = Splash::go()->appendRecursiveDirectory(__DIR__)->recursiveIterator()->regex($match);
+    $paths = Splash::go()->appendRecursiveDirectory(__DIR__)->regex($match);
     $matches = 0;
     foreach ($paths as $path) {
       ++$matches;
