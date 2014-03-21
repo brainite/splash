@@ -46,6 +46,19 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
     }
     $this->assertEquals(1, $matches);
 
+    // Repeat the first test.
+    $splash = Splash::go()->push(__DIR__);
+    $this->assertEquals(1, $splash->count(), "Pushing first item should make count = 1.");
+    var_dump(iterator_to_array($splash->recursiveDirectory()));
+    $paths = $splash->recursiveDirectory()->regex($match);
+    var_dump(iterator_to_array($paths), $paths->count());
+    $matches = 0;
+    foreach ($paths as $path) {
+      ++$matches;
+      $this->assertEquals(realpath(__FILE__), realpath($path));
+    }
+    $this->assertEquals(1, $matches);
+
     // Shorthand.
     $matches = 0;
     $paths = splash(__DIR__)->recursiveDirectory($flags)->regex($match);
