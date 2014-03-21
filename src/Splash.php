@@ -58,7 +58,6 @@ class Splash extends \AppendIterator {
    * @return \Splash\Splash
    */
   public function __call($name, $args) {
-    echo " call $name " . sizeof($args) . "\n";
     if (method_exists("\\AppendIterator", $name)) {
       switch (sizeof($args)) {
         case 0:
