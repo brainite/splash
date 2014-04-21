@@ -62,12 +62,16 @@ class Splash extends \AppendIterator {
       }
     }
 
-    if (strcasecmp('InverseRegex', $name) == 0) {
-      $name = '\\Splash\\Iterator\\InverseRegexIterator';
+    // Look for a custom iterator configuration.
+    $custom = SplashRegistry::go()->getIteratorClass($name);
+    if ($custom) {
+      $name = $custom;
     }
     else {
       $name .= 'Iterator';
     }
+
+    // Look for an append operation.
     if (substr($name, 0, 6) === 'append') {
       $name = substr($name, 6);
       switch (sizeof($args)) {
@@ -130,7 +134,7 @@ class Splash extends \AppendIterator {
       }
       return $ret;
     }
-    else {
+    elseif (class_exists($name)) {
       // NOTE: The iterator_to_array casting below improves handling by HHVM.
       $ret = Splash::go();
       switch (sizeof($args)) {
@@ -156,6 +160,9 @@ class Splash extends \AppendIterator {
           break;
       }
       return $ret;
+    }
+    else {
+      throw new \ErrorException("Splash method call does not correspond to a valid iterator class.");
     }
   }
 
