@@ -14,4 +14,4 @@ foreach (splash(__DIR__)->recursiveDirectory()->regex($match) as $path) {
 }
 ````
 
-[For more information, visit the project page.](http://www.admin.witti.ws/project/splash)
+[For more information, visit the project page.](http://www.witti.ws/project/splash)
