@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of the Splash package.
+ *
+ * (c) Greg Payne
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Splash;
 
 class Splash extends \AppendIterator {
@@ -53,7 +62,12 @@ class Splash extends \AppendIterator {
       }
     }
 
-    $name .= 'Iterator';
+    if (strcasecmp('InverseRegex', $name) == 0) {
+      $name = '\\Splash\\Iterator\\InverseRegexIterator';
+    }
+    else {
+      $name .= 'Iterator';
+    }
     if (substr($name, 0, 6) === 'append') {
       $name = substr($name, 6);
       switch (sizeof($args)) {
@@ -158,7 +172,7 @@ class Splash extends \AppendIterator {
     return Splash::go()->append(new \ArrayIterator(array_unique($this->toArray())));
   }
 
-  private function toArray() {
+  public function toArray() {
     $this->rewind();
     $item = $this->current();
 
