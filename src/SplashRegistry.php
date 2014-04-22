@@ -12,6 +12,7 @@ namespace Splash;
 
 class SplashRegistry {
   private $classmap = array(
+    'callback' => '\\Splash\\Iterator\\CallbackIterator',
     'inverseregex' => '\\Splash\\Iterator\\InverseRegexIterator',
     'slice' => '\\Splash\\Iterator\\SliceIterator',
   );

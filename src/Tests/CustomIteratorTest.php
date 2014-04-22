@@ -13,6 +13,33 @@ use Splash\Splash;
 
 class CustomIteratorTest extends \PHPUnit_Framework_TestCase {
   /**
+   * Test the CallbackIterator
+   */
+  public function testCallback() {
+    $expected = array(
+      11,
+      21,
+    );
+    $actual = splash(10, 20)->callback(function (&$v) {
+      $v++;
+      return TRUE;
+    })->toArray();
+    $this->assertEquals($expected, $actual);
+
+    $expected = array(
+      11,
+      21,
+    );
+    $actual = splash(1, 2)->callback(function ($v, $k, $it, $new) {
+      if ($v == 1) {
+        $new->append(11);
+        $new->append(21);
+      }
+    })->toArray();
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
    * Test the InverseRegexIterator
    */
   public function testInverseRegex() {
