@@ -1,9 +1,11 @@
 {
     "name":"wittiws/splash",
     "type":"library",
-    "description":"Pre-alpha",
+    "description":"Chainable SPL and custom iterators.",
     "keywords":[
-        "xml"
+        "iterators",
+        "SPL",
+        "chaining"
     ],
     "homepage":"https://github.com/wittiws/splash",
     "license":"MIT",
