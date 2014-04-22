@@ -38,3 +38,27 @@ This is a simple iterator that narrows results to a slice like array_slice().
 $dat = splash('a', 'b', 'c')->slice(1, 1)->toArray();
 // $dat == array('b')
 ````
+
+### [CallbackIterator](https://github.com/wittiws/splash/blob/master/src/Iterator/CallbackIterator.php)
+
+This is an iterator that runs a callback against each element and allows the callback to either
+return TRUE to retain values (like with CallbackFilterIterator) or to directly manipulate the
+new iterator. The direct advanced option allows for the splitting of values via the callback.
+
+```` php
+/**
+ * Callback for CallbackIterator
+ *
+ * @param $current   Current item's value
+ * @param $key       Current item's key
+ * @param $iterator  Iterator being traversed
+ * @param $new_iterator Iterator being built (to allow item splits)
+ * @return boolean   TRUE to auto-add the current item to $new_iterator, FALSE otherwise
+ */
+function my_callback(&$current, $key, $iterator, &$new_iterator) {
+  $current = 'a';
+}
+
+$dat = splash('a', 'b', 'c')->callback('my_callback')->toArray();
+// $dat == array('a', 'a', 'a')
+````
