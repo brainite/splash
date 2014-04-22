@@ -29,3 +29,12 @@ This is a simple iterator that excludes any items that match a regular expressio
 $dat = splash('a', 'b')->inverseRegex('/a/')->toArray();
 // $dat == array('b')
 ````
+
+### [SliceIterator](https://github.com/wittiws/splash/blob/master/src/Iterator/SliceIterator.php)
+
+This is a simple iterator that narrows results to a slice like array_slice().
+
+```` php
+$dat = splash('a', 'b', 'c')->slice(1, 1)->toArray();
+// $dat == array('b')
+````
