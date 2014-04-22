@@ -27,4 +27,22 @@ class CustomIteratorTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($expected, $actual);
   }
 
+  /**
+   * Test the SliceIterator
+   */
+  public function testSlice() {
+    $expected = array(
+      'bar',
+      'bar2',
+    );
+    $actual = splash('foo', 'bar', 'bar2')->slice(1)->toArray();
+    $this->assertEquals($expected, $actual);
+
+    $expected = array(
+      'bar',
+    );
+    $actual = splash('foo', 'bar', 'bar2')->slice(1, 1)->toArray();
+    $this->assertEquals($expected, $actual);
+  }
+
 }

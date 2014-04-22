@@ -13,6 +13,7 @@ namespace Splash;
 class SplashRegistry {
   private $classmap = array(
     'inverseregex' => '\\Splash\\Iterator\\InverseRegexIterator',
+    'slice' => '\\Splash\\Iterator\\SliceIterator',
   );
 
   static public function go() {
