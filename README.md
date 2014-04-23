@@ -57,6 +57,7 @@ new iterator. The direct advanced option allows for the splitting of values via 
  */
 function my_callback(&$current, $key, $iterator, &$new_iterator) {
   $current = 'a';
+  return TRUE;
 }
 
 $dat = splash('a', 'b', 'c')->callback('my_callback')->toArray();
