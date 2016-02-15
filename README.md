@@ -10,7 +10,7 @@ Splash is a chainable (and therefore concise) way to interact with the SPL itera
 ```` php
 // Basic example.
 \Splash\Splash::mount();
-foreach (splash(__DIR__)->recursiveDirectory()->regex($match) as $path) {
+foreach (splash(__DIR__)->recursiveDirectory()->recursiveIterator()->regex($match) as $path) {
 }
 ````
 
