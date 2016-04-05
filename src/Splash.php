@@ -20,7 +20,7 @@ class Splash extends \AppendIterator {
    * @param mixed $var
    * @return \Splash\Splash
    */
-  public function push($var) {
+  public function &push($var) {
     if (is_object($var) && in_array('Iterator', class_implements($var))) {
       return $this->append($var);
     }
@@ -29,7 +29,20 @@ class Splash extends \AppendIterator {
     }
   }
 
-  public function append(\Iterator $it) {
+  /**
+   * Add an array of values
+   * @param array $array
+   * @return \Splash\Splash
+   */
+  public function pushArray($array) {
+    return $this->append(new \ArrayIterator($array));
+  }
+
+  /**
+   * Append an iterator
+   * @see AppendIterator::append()
+   */
+  public function &append(\Iterator $it) {
     parent::append($it);
     return $this;
   }
@@ -195,6 +208,10 @@ class Splash extends \AppendIterator {
     else {
       return iterator_to_array($this);
     }
+  }
+
+  public function toStringImplode($glue = '') {
+    return implode($glue, $this->toArray());
   }
 
 }
