@@ -11,8 +11,17 @@
 namespace Splash;
 
 class Splash extends \AppendIterator {
-  public static function go() {
-    return new Splash();
+  static public function go() {
+    $s = new Splash();
+    return func_num_args() ? $s->appendArray(func_get_args()) : $s;
+  }
+
+  static public function fromArray() {
+    $s = new Splash();
+    foreach (func_get_args() as $arg) {
+      $s->pushArray($arg);
+    }
+    return $s;
   }
 
   /**
