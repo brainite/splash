@@ -12,6 +12,24 @@ namespace Splash\Tests;
 
 use Splash\Splash;
 class BasicTest extends \PHPUnit_Framework_TestCase {
+  public function testBuiltinIterators() {
+    Splash::mount();
+
+    // Test array_diff.
+    $expected = "1 2 3";
+    $test = splash(1, 2, 3, 4)->diff(4, Splash::VALUE)->toArray();
+    $actual = join(' ', $test);
+    $this->assertEquals($expected, $actual, "Test diff by value");
+    $test = splash(1, 2, 3, 4)->diff(array(
+      3 => 'delete',
+    ), Splash::KEY)->toArray();
+    $actual = join(' ', $test);
+    $this->assertEquals($expected, $actual, "Test diff by key");
+    $test = splash(1, 2, 3, 4)->diff(3, Splash::KEY_ARRAY)->toArray();
+    $actual = join(' ', $test);
+    $this->assertEquals($expected, $actual, "Test diff by key array");
+  }
+
   public function testMount() {
     // Confirm that multiple calls are safe.
     Splash::mount();

@@ -11,6 +11,13 @@
 namespace Splash;
 
 class Splash extends \AppendIterator {
+  const KEY = 1;
+  const KEY_INSENSITIVE = 2;
+  const VALUE = 3;
+  const VALUE_INSENSITIVE = 4;
+  const KEYVALUE = 5;
+  const KEY_ARRAY = 6;
+
   static public function go() {
     $s = new Splash();
     return func_num_args() ? $s->appendArray(func_get_args()) : $s;
@@ -62,6 +69,32 @@ class Splash extends \AppendIterator {
    */
   public function count() {
     return iterator_count($this);
+  }
+
+  /**
+   * Remove items from the iterator.
+   * @param Iterator|array $it
+   * @param int $mode
+   * @throws \InvalidArgumentException
+   * @return \Splash\Splash
+   */
+  public function diff($it, $mode = self::VALUE) {
+    switch ($mode) {
+      case self::KEY:
+        return Splash::go()->append(new \ArrayIterator(array_diff_key($this->toArray(), (array) $it)));
+
+      case self::KEY_ARRAY:
+        return Splash::go()->append(new \ArrayIterator(array_diff_key($this->toArray(), array_fill_keys((array) $it, NULL))));
+
+      case self::VALUE:
+        return Splash::go()->append(new \ArrayIterator(array_diff($this->toArray(), (array) $it)));
+
+      case self::KEYVALUE:
+        return Splash::go()->append(new \ArrayIterator(array_diff_assoc($this->toArray(), (array) $it)));
+
+      default:
+        throw new \InvalidArgumentException("Requested diff mode is unsupported.");
+    }
   }
 
   /**
