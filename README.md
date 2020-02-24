@@ -3,7 +3,7 @@ Splash
 
 Tested against PHP 5.3/5.4/5.5/HHVM
 
-[![Build Status](https://travis-ci.org/stackpr/splash.png?branch=master)](https://travis-ci.org/stackpr/splash)
+[![Build Status](https://travis-ci.org/brainite/splash.png?branch=master)](https://travis-ci.org/brainite/splash)
 
 Splash is a chainable (and therefore concise) way to interact with the SPL iterators.
 
