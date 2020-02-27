@@ -1,5 +1,5 @@
 {
-    "name":"wittiws/splash",
+    "name":"brainite/splash",
     "type":"library",
     "description":"Chainable SPL and custom iterators.",
     "keywords":[
@@ -7,12 +7,12 @@
         "SPL",
         "chaining"
     ],
-    "homepage":"https://github.com/wittiws/splash",
+    "homepage":"https://github.com/brainite/splash",
     "license":"MIT",
     "authors":[
         {
             "name":"Greg Payne",
-            "homepage":"http://www.witti.ws/",
+            "homepage":"https://brainite.org/",
             "role":"Developer"
         }
     ],
