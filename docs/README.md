@@ -14,13 +14,6 @@ The ability to iterate over a non-array collection and then to iterate over
 that iterator creates an interesting design pattern for building with PHP. 
 However, the iterators deprioritize conciseness and therefore (to some degree) readability.
 
-```` php
-// Basic example.
-\Splash\Splash::mount();
-foreach (splash(__DIR__)->recursiveDirectory()->recursiveIterator()->regex($match) as $path) {
-}
-````
-
 ## Example Default SPL Iterator Usage
 
 This example is extracted from the <a href="http://www.php.net/manual/en/class.recursivedirectoryiterator.php">PHP manual</a>.
@@ -38,9 +31,9 @@ As with any non-chainable procedural code, you have to read this from the inside
 
 ```php
 \Splash\Splash::mount();
-$objects = splash($path)-&gt;recursiveDirectory()
-  -&gt;recursiveIterator(RecursiveIteratorIterator::SELF_FIRST)
-  -&gt;regex('/^.+\.php$/i');
+$objects = splash($path)->recursiveDirectory()
+  ->recursiveIterator(RecursiveIteratorIterator::SELF_FIRST)
+  ->regex('/^.+\.php$/i');
 foreach ($objects as $object) {}
 ```
 
