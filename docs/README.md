@@ -3,7 +3,7 @@ Splash
 
 Tested against PHP 5.6/7.1/HHVM
 
-[![Build Status](https://travis-ci.org/brainite/splash.png?branch=master)](https://travis-ci.org/brainite/splash)
+[![CI](https://github.com/brainite/splash/actions/workflows/ci.yml/badge.svg)](https://github.com/brainite/splash/actions/workflows/ci.yml)
 
 Splash is a chainable (and therefore concise) way to interact with the SPL iterators.
 The <a href="http://www.php.net/manual/en/intro.spl.php">Standard PHP Library (SPL)</a>
